@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ContosoUniversity.Models
@@ -15,6 +16,6 @@ namespace ContosoUniversity.Models
         [DisplayFormat(NullDisplayText = "No addresses")]
         public string Adress { get; set; }
 
-       public Department Department { get; set; }
+        public ICollection<Department> Departments { get; set; }
     }
 }

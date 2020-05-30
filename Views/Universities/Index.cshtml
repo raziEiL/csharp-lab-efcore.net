@@ -4,20 +4,20 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Universities</h1>
+<h1>Университеты</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create">Создать</a>
 </p>
 
 <table class="table">
     <thead>
         <tr>
             <th>
-                <a asp-action="Index" asp-route-sortOrder="@ViewData["NameSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Name</a>
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["NameSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Название</a>
             </th>
             <th>
-               Adress
+               Адресс
             </th>
             <th></th>
         </tr>
@@ -33,9 +33,9 @@
                     @Html.DisplayFor(modelItem => item.Adress)
                 </td>
                 <td>
-                    <a asp-action="Edit" asp-route-id="@item.UniversityID">Edit</a> |
+                    <a asp-action="Edit" asp-route-id="@item.UniversityID">Редактировать</a> |
                     @*<a asp-action="Details" asp-route-id="@item.ID">Details</a> |*@
-                    <a asp-action="Delete" asp-route-id="@item.UniversityID">Delete</a>
+                    <a asp-action="Delete" asp-route-id="@item.UniversityID">Удалить</a>
                 </td>
             </tr>
         }
@@ -52,12 +52,12 @@
    asp-route-pageNumber="@(Model.PageIndex - 1)"
    asp-route-currentFilter="@ViewData["CurrentFilter"]"
    class="btn btn-default @prevDisabled">
-    Previous
+    Назад
 </a>
 <a asp-action="Index"
    asp-route-sortOrder="@ViewData["CurrentSort"]"
    asp-route-pageNumber="@(Model.PageIndex + 1)"
    asp-route-currentFilter="@ViewData["CurrentFilter"]"
    class="btn btn-default @nextDisabled">
-    Next
+    Вперед
 </a>

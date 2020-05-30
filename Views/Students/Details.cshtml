@@ -4,10 +4,10 @@
     ViewData["Title"] = "Details";
 }
 
-<h1>Details</h1>
+<h1>Подробно</h1>
 
 <div>
-    <h4>Student</h4>
+    <h4>Студент</h4>
     <hr />
     <dl class="row">
         <dt class="col-sm-2">
@@ -34,8 +34,8 @@
         <dd class="col-sm-10">
             <table class="table">
                 <tr>
-                    <th>Course Title</th>
-                    <th>Grade</th>
+                    <th>Название курса</th>
+                    <th>Оценка</th>
                 </tr>
                 @foreach (var item in Model.Enrollments)
                 {
@@ -53,6 +53,6 @@
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.ID">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Edit" asp-route-id="@Model.ID">Редактировать</a> |
+    <a asp-action="Index">Назад</a>
 </div>
