@@ -4,43 +4,43 @@
     ViewData["Title"] = "Create";
 }
 
-<h2>Создать</h2>
+<h2>Добавить</h2>
 
-<h4>Курсы</h4>
+<h4>Кафедры</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
+                <label asp-for="Name" class="control-label">Название</label>
                 <input asp-for="Name" class="form-control" />
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Budget" class="control-label"></label>
+                <label asp-for="Budget" class="control-label">Бюджет</label>
                 <input asp-for="Budget" class="form-control" />
                 <span asp-validation-for="Budget" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="StartDate" class="control-label"></label>
+                <label asp-for="StartDate" class="control-label">Дата начала</label>
                 <input asp-for="StartDate" class="form-control" />
                 <span asp-validation-for="StartDate" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="InstructorID" class="control-label"></label>
+                <label asp-for="InstructorID" class="control-label">Руководитель</label>
                 <select asp-for="InstructorID" class="form-control" asp-items="ViewBag.InstructorID">
-                    <option value="">-- Select Administrator --</option>
+                    <option value="">-- Выберите руководителя --</option>
                 </select>
             </div>
             <div class="form-group">
-                <label asp-for="UniversityID" class="control-label"></label>
+                <label asp-for="UniversityID" class="control-label">Университет</label>
                 <select asp-for="UniversityID" class="form-control" asp-items="ViewBag.UniversityID">
-                    <option value="">-- Select University --</option>
+                    <option value="">-- Выберите университет --</option>
                 </select>
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <input type="submit" value="Добавить" class="btn btn-primary" />
             </div>
         </form>
     </div>

@@ -10,29 +10,29 @@
 
 <h3>Вы точно хотите удалить этот элемент?</h3>
 <div>
-    <h4>Курс</h4>
+    <h4>Кафедра</h4>
     <hr />
     <dl class="row">
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Name)
+            Название
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Name)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Budget)
+            Бюджет
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Budget)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.StartDate)
+            Дата начала
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.StartDate)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Administrator)
+            Руководитель
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Administrator.FullName)
@@ -43,8 +43,9 @@
         <input type="hidden" asp-for="DepartmentID" />
         <input type="hidden" asp-for="RowVersion" />
         <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
-            <a asp-action="Index">Назад</a>
+            <input type="submit" value="Удалить" class="btn btn-danger" />
         </div>
     </form>
+    <br />
+    <a asp-action="Index">Назад</a>
 </div>

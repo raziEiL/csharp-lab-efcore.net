@@ -7,7 +7,7 @@
 <h2>Преподаватель</h2>
 
 <p>
-    <a asp-action="Create">Создать</a>
+    <a asp-action="Create">Добавить</a>
 </p>
 <table class="table">
     <thead>
@@ -15,8 +15,8 @@
             <th>Фамилия</th>
             <th>Имя</th>
             <th>Дата найма</th>
-            <th>Офис</th>
-            <th>Курсы</th>
+            <th>Аудитория</th>
+            <th>Предмет</th>
             <th></th>
         </tr>
     </thead>
@@ -28,37 +28,36 @@
             {
                 selectedRow = "success";
             }
-            <tr class="@selectedRow">
-                <td>
-                    @Html.DisplayFor(modelItem => item.LastName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.FirstMidName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.HireDate)
-                </td>
-                <td>
-                    @if (item.OfficeAssignment != null)
+        <tr class="@selectedRow">
+            <td>
+                @Html.DisplayFor(modelItem => item.LastName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FirstMidName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.HireDate)
+            </td>
+            <td>
+                @if (item.OfficeAssignment != null)
+                {
+                    @item.OfficeAssignment.Location
+                }
+            </td>
+            <td>
+                @{
+                    foreach (var course in item.CourseAssignments)
                     {
-                        @item.OfficeAssignment.Location
+                        @course.Course.CourseID @:  @course.Course.Title <br />
                     }
-                </td>
-                <td>
-                    @{
-                        foreach (var course in item.CourseAssignments)
-                        {
-                            @course.Course.CourseID @:  @course.Course.Title <br />
-                        }
-                    }
-                </td>
-                <td>
-                    <a asp-action="Index" asp-route-id="@item.ID">Выбрать</a> |
-                    <a asp-action="Edit" asp-route-id="@item.ID">Редактировать</a> |
-                    <a asp-action="Details" asp-route-id="@item.ID">Подробно</a> |
-                    <a asp-action="Delete" asp-route-id="@item.ID">Удалить</a>
-                </td>
-            </tr>
+                }
+            </td>
+            <td>
+                <a asp-action="Index" asp-route-id="@item.ID">Выбрать</a> |
+                <a asp-action="Edit" asp-route-id="@item.ID">Редактировать</a> |
+                <a asp-action="Delete" asp-route-id="@item.ID">Удалить</a>
+            </td>
+        </tr>
         }
     </tbody>
 </table>
@@ -103,7 +102,6 @@
 @if (Model.Enrollments != null)
 {
     <h3>
-        
          Студенты, зачисленные на выбранный курс
     </h3>
     <table class="table">

@@ -1,12 +1,11 @@
-﻿using System;
+﻿using ContosoUniversity.Data;
+using ContosoUniversity.Models;
+using ContosoUniversity.Models.SchoolViewModels;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using ContosoUniversity.Data;
-using ContosoUniversity.Models;
 
 namespace ContosoUniversity.Controllers
 {
@@ -20,44 +19,13 @@ namespace ContosoUniversity.Controllers
         }
 
         // GET: Students
-        public async Task<IActionResult> Index(
-            string sortOrder,
-            string currentFilter,
-            string searchString,
-            int? pageNumber)
+        public async Task<IActionResult> Index()
         {
-            ViewData["CurrentSort"] = sortOrder;
-            ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
-
-            if (searchString != null)
-            {
-                pageNumber = 1;
-            }
-            else
-            {
-                searchString = currentFilter;
-            }
-
-            ViewData["CurrentFilter"] = searchString;
-
-            var universities = from s in _context.University
-                           select s;
-            if (!String.IsNullOrEmpty(searchString))
-            {
-                universities = universities.Where(s => s.Name.Contains(searchString));
-            }
-            switch (sortOrder)
-            {
-                case "name_desc":
-                    universities = universities.OrderByDescending(s => s.Name);
-                    break;
-                default:
-                    universities = universities.OrderBy(s => s.Name);
-                    break;
-            }
-
-            int pageSize = 3;
-            return View(await PaginatedList<University>.CreateAsync(universities.AsNoTracking(), pageNumber ?? 1, pageSize));
+            var viewModel = new UniversityData();
+            viewModel.Universities = await _context.Universities
+                   .Include(i => i.Departments)
+                  .ToListAsync();
+            return View(viewModel);
         }
 
         // GET: Students/Details/5
@@ -123,7 +91,7 @@ namespace ContosoUniversity.Controllers
                 return NotFound();
             }
 
-            var student = await _context.University.FindAsync(id);
+            var student = await _context.Universities.FindAsync(id);
             if (student == null)
             {
                 return NotFound();
@@ -142,7 +110,7 @@ namespace ContosoUniversity.Controllers
             {
                 return NotFound();
             }
-            var universityToUpdate = await _context.University.FirstOrDefaultAsync(s => s.UniversityID == id);
+            var universityToUpdate = await _context.Universities.FirstOrDefaultAsync(s => s.UniversityID == id);
             if (await TryUpdateModelAsync<University>(
                 universityToUpdate,
                 "",
@@ -172,10 +140,10 @@ namespace ContosoUniversity.Controllers
                 return NotFound();
             }
 
-            var student = await _context.University
+            var university = await _context.Universities
                 .AsNoTracking()
                 .FirstOrDefaultAsync(m => m.UniversityID == id);
-            if (student == null)
+            if (university == null)
             {
                 return NotFound();
             }
@@ -187,35 +155,36 @@ namespace ContosoUniversity.Controllers
                     "see your system administrator.";
             }
 
-            return View(student);
+            return View(university);
         }
         // POST: Students/Delete/5
-        [HttpPost, ActionName("Delete")]
+        [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> Delete(University university)
         {
-            var university = await _context.University.FindAsync(id);
-            if (university == null)
-            {
-                return RedirectToAction(nameof(Index));
-            }
-
             try
             {
-                _context.University.Remove(university);
-                await _context.SaveChangesAsync();
+                if (await _context.Universities.AnyAsync(m => m.UniversityID == university.UniversityID))
+                {
+                    var departments = await _context.Departments
+                    .Where(d => d.UniversityID == university.UniversityID)
+                    .ToListAsync();
+                    departments.ForEach(d => d.UniversityID = null);
+                    _context.Universities.Remove(university);
+                    await _context.SaveChangesAsync();
+                }
                 return RedirectToAction(nameof(Index));
             }
-            catch (DbUpdateException /* ex */)
+            catch (DbUpdateConcurrencyException /* ex */)
             {
                 //Log the error (uncomment ex variable name and write a log.)
-                return RedirectToAction(nameof(Delete), new { id = id, saveChangesError = true });
+                return RedirectToAction(nameof(Delete), new { concurrencyError = true, id = university.UniversityID });
             }
         }
 
         private bool UniversityExists(int id)
         {
-            return _context.University.Any(e => e.UniversityID == id);
+            return _context.Universities.Any(e => e.UniversityID == id);
         }
     }
 }

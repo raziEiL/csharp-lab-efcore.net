@@ -24,7 +24,7 @@ namespace ContosoUniversity.Data
                 new University { Name = "Cambridge", Adress = "England"}
             };
 
-            context.University.AddRange(universities);
+            context.Universities.AddRange(universities);
             context.SaveChanges();
 
             var students = new Student[]

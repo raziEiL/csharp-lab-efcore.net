@@ -26,34 +26,11 @@ namespace ContosoUniversity.Controllers
             return View(await schoolContext.ToListAsync());
         }
 
-        // GET: Departments/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            string query = "SELECT * FROM Department WHERE DepartmentID = {0}";
-            var department = await _context.Departments
-                .FromSql(query, id)
-                .Include(d => d.Administrator).Include(d => d.University)
-                .AsNoTracking()
-                .FirstOrDefaultAsync();
-
-            if (department == null)
-            {
-                return NotFound();
-            }
-
-            return View(department);
-        }
-
         // GET: Departments/Create
         public IActionResult Create()
         {
             ViewData["InstructorID"] = new SelectList(_context.Instructors, "ID", "FullName");
-            ViewData["UniversityID"] = new SelectList(_context.University, "UniversityID", "Name");
+            ViewData["UniversityID"] = new SelectList(_context.Universities, "UniversityID", "Name");
             return View();
         }
 
@@ -71,7 +48,7 @@ namespace ContosoUniversity.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["InstructorID"] = new SelectList(_context.Instructors, "ID", "FullName", department.InstructorID);
-            ViewData["UniversityID"] = new SelectList(_context.University, "UniversityID", "Name", department.UniversityID);
+            ViewData["UniversityID"] = new SelectList(_context.Universities, "UniversityID", "Name", department.UniversityID);
             return View(department);
         }
 
@@ -93,7 +70,7 @@ namespace ContosoUniversity.Controllers
                 return NotFound();
             }
             ViewData["InstructorID"] = new SelectList(_context.Instructors, "ID", "FullName", department.InstructorID);
-            ViewData["UniversityID"] = new SelectList(_context.University, "UniversityID", "Name", department.UniversityID);
+            ViewData["UniversityID"] = new SelectList(_context.Universities, "UniversityID", "Name", department.UniversityID);
             return View(department);
         }
 
@@ -118,7 +95,7 @@ namespace ContosoUniversity.Controllers
                 ModelState.AddModelError(string.Empty,
                     "Unable to save changes. The department was deleted by another user.");
                 ViewData["InstructorID"] = new SelectList(_context.Instructors, "ID", "FullName", deletedDepartment.InstructorID);
-                ViewData["UniversityID"] = new SelectList(_context.University, "UniversityID", "Name", deletedDepartment.UniversityID);
+                ViewData["UniversityID"] = new SelectList(_context.Universities, "UniversityID", "Name", deletedDepartment.UniversityID);
                 return View(deletedDepartment);
             }
 
@@ -127,7 +104,7 @@ namespace ContosoUniversity.Controllers
             if (await TryUpdateModelAsync<Department>(
                 departmentToUpdate,
                 "",
-                s => s.Name, s => s.StartDate, s => s.Budget, s => s.InstructorID))
+                s => s.Name, s => s.StartDate, s => s.Budget, s => s.InstructorID, s => s.UniversityID))
             {
                 try
                 {
@@ -167,7 +144,7 @@ namespace ContosoUniversity.Controllers
                         }
                         if (databaseValues.UniversityID != clientValues.UniversityID)
                         {
-                            University databaseUniversity = await _context.University.FirstOrDefaultAsync(i => i.UniversityID == databaseValues.UniversityID);
+                            University databaseUniversity = await _context.Universities.FirstOrDefaultAsync(i => i.UniversityID == databaseValues.UniversityID);
                             ModelState.AddModelError("UniversityID", $"Current value: {databaseUniversity?.Name}");
                         }
 
@@ -182,7 +159,7 @@ namespace ContosoUniversity.Controllers
                 }
             }
             ViewData["InstructorID"] = new SelectList(_context.Instructors, "ID", "FullName", departmentToUpdate.InstructorID);
-            ViewData["UniversityID"] = new SelectList(_context.University, "UniversityID", "Name", departmentToUpdate.UniversityID);
+            ViewData["UniversityID"] = new SelectList(_context.Universities, "UniversityID", "Name", departmentToUpdate.UniversityID);
             return View(departmentToUpdate);
         }
 
