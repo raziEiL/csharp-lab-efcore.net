@@ -53,7 +53,7 @@
                 }
             </td>
             <td>
-                <a asp-action="Index" asp-route-id="@item.ID">Выбрать</a> |
+                <a asp-action="Index" asp-route-id="@item.ID">Подробно</a> |
                 <a asp-action="Edit" asp-route-id="@item.ID">Редактировать</a> |
                 <a asp-action="Delete" asp-route-id="@item.ID">Удалить</a>
             </td>
@@ -64,26 +64,17 @@
 
 @if (Model.Courses != null)
 {
-    <h3>Курсы, преподаваемые выбранным преподавателем</h3>
+    <h3>Предметы, преподаваемые выбранным преподавателем</h3>
     <table class="table">
         <tr>
-            <th></th>
             <th>Номер</th>
             <th>Название</th>
-            <th>Предмет</th>
+            <th>Кафедра</th>
         </tr>
 
         @foreach (var item in Model.Courses)
         {
-            string selectedRow = "";
-            if (item.CourseID == (int?)ViewData["CourseID"])
-            {
-                selectedRow = "success";
-            }
-            <tr class="@selectedRow">
-                <td>
-                    @Html.ActionLink("Select", "Index", new { courseID = item.CourseID })
-                </td>
+            <tr>
                 <td>
                     @item.CourseID
                 </td>
@@ -96,29 +87,5 @@
             </tr>
         }
 
-    </table>
-}
-
-@if (Model.Enrollments != null)
-{
-    <h3>
-         Студенты, зачисленные на выбранный курс
-    </h3>
-    <table class="table">
-        <tr>
-            <th>Имя</th>
-            <th>Оценка</th>
-        </tr>
-        @foreach (var item in Model.Enrollments)
-        {
-            <tr>
-                <td>
-                    @item.Student.FullName
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Grade)
-                </td>
-            </tr>
-        }
     </table>
 }

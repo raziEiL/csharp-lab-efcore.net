@@ -30,5 +30,6 @@ namespace ContosoUniversity.Models
         public Instructor Administrator { get; set; }
         public University University { get; set; }
         public ICollection<Course> Courses { get; set; }
+        public ICollection<Student> Students { get; set; }
     }
 }

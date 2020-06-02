@@ -68,27 +68,6 @@ namespace ContosoUniversity.Controllers
             return View(await PaginatedList<Student>.CreateAsync(students.AsNoTracking(), pageNumber ?? 1, pageSize));
         }
 
-        // GET: Students/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var student = await _context.Students
-                 .Include(s => s.Enrollments)
-                     .ThenInclude(e => e.Course)
-                 .AsNoTracking()
-                 .FirstOrDefaultAsync(m => m.ID == id);
-
-            if (student == null)
-            {
-                return NotFound();
-            }
-
-            return View(student);
-        }
 
         // GET: Students/Create
         public IActionResult Create()
