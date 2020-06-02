@@ -205,6 +205,10 @@ namespace ContosoUniversity.Controllers
             {
                 if (await _context.Departments.AnyAsync(m => m.DepartmentID == department.DepartmentID))
                 {
+                    var students = await _context.Students
+                    .Where(d => d.DepartmentID == department.DepartmentID)
+                    .ToListAsync();
+                    students.ForEach(d => d.DepartmentID = null);
                     _context.Departments.Remove(department);
                     await _context.SaveChangesAsync();
                 }

@@ -36,7 +36,7 @@ namespace ContosoUniversity.Models
         {
             get
             {
-                return University.Name + " (" + Name + ")";
+                return University == null ? "" : University.Name + " (" + Name + ")";
             }
         }
     }

@@ -13,34 +13,41 @@
     <thead>
         <tr>
             <th>
-               №
+                №
             </th>
             <th>
-               Название
+                Название
             </th>
             <th>
                 Кафедра
             </th>
+            <th>
+                Университет
+            </th>
+            <th> </th>
         </tr>
     </thead>
     <tbody>
         @foreach (var item in Model)
         {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.CourseID)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Title)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Department.Name)
-                </td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.CourseID">Редактировать</a> |
-                    <a asp-action="Delete" asp-route-id="@item.CourseID">Удалить</a>
-                </td>
-            </tr>
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.CourseID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Department.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Department.University.Name)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.CourseID">Редактировать</a> |
+                <a asp-action="Delete" asp-route-id="@item.CourseID">Удалить</a>
+            </td>
+        </tr>
         }
     </tbody>
 </table>

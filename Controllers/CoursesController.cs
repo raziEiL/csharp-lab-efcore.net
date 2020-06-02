@@ -22,10 +22,10 @@ namespace ContosoUniversity.Controllers
         // GET: Courses
         public async Task<IActionResult> Index()
         {
-            var courses = _context.Courses
-                .Include(c => c.Department)
-                .AsNoTracking();
-            return View(await courses.ToListAsync());
+            var courses = await _context.Courses
+                .Include(c => c.Department).ThenInclude(i => i.University)
+                .ToListAsync();
+            return View(courses);
         }
 
         // GET: Courses/Create
@@ -108,12 +108,8 @@ namespace ContosoUniversity.Controllers
 
         private void PopulateDepartmentsDropDownList(object selectedDepartment = null)
         {
-            var departmentsQuery = from d in _context.Departments
-                                   orderby d.Name
-                                   select d;
-            ViewBag.DepartmentID = new SelectList(departmentsQuery.AsNoTracking(), "DepartmentID", "Name", selectedDepartment);
+            ViewBag.DepartmentID = new SelectList(_context.Departments.Include(i => i.University).AsNoTracking(), "DepartmentID", "FullName", selectedDepartment);
         }
-
         // GET: Courses/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
@@ -143,24 +139,6 @@ namespace ContosoUniversity.Controllers
             _context.Courses.Remove(course);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
-        }
-
-        public IActionResult UpdateCourseCredits()
-        {
-            return View();
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> UpdateCourseCredits(int? multiplier)
-        {
-            if (multiplier != null)
-            {
-                ViewData["RowsAffected"] =
-                    await _context.Database.ExecuteSqlCommandAsync(
-                        "UPDATE Course SET Credits = Credits * {0}",
-                        parameters: multiplier);
-            }
-            return View();
         }
 
         private bool CourseExists(int id)
