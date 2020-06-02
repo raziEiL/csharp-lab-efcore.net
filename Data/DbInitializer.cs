@@ -71,19 +71,19 @@ namespace ContosoUniversity.Data
 {
                 new Student { FirstMidName = "Carson",   LastName = "Alexander", DepartmentID = departments.Single(i => i.Name == "English").DepartmentID,
                     EnrollmentDate = DateTime.Parse("2010-09-01") },
-                new Student { FirstMidName = "Meredith", LastName = "Alonso",
+                new Student { FirstMidName = "Meredith", LastName = "Alonso", DepartmentID = departments.Single(i => i.Name == "English").DepartmentID,
                     EnrollmentDate = DateTime.Parse("2012-09-01") },
-                new Student { FirstMidName = "Arturo",   LastName = "Anand",
+                new Student { FirstMidName = "Arturo",   LastName = "Anand" ,DepartmentID = departments.Single(i => i.Name == "Mathematics").DepartmentID,
                     EnrollmentDate = DateTime.Parse("2013-09-01") },
-                new Student { FirstMidName = "Gytis",    LastName = "Barzdukas",
+                new Student { FirstMidName = "Gytis",    LastName = "Barzdukas", DepartmentID = departments.Single(i => i.Name == "Mathematics").DepartmentID,
                     EnrollmentDate = DateTime.Parse("2012-09-01") },
-                new Student { FirstMidName = "Yan",      LastName = "Li",
+                new Student { FirstMidName = "Yan",      LastName = "Li", DepartmentID = departments.Single(i => i.Name == "Engineering").DepartmentID,
                     EnrollmentDate = DateTime.Parse("2012-09-01") },
-                new Student { FirstMidName = "Peggy",    LastName = "Justice",
+                new Student { FirstMidName = "Peggy",    LastName = "Justice" ,DepartmentID = departments.Single(i => i.Name == "Engineering").DepartmentID,
                     EnrollmentDate = DateTime.Parse("2011-09-01") },
-                new Student { FirstMidName = "Laura",    LastName = "Norman",
+                new Student { FirstMidName = "Laura",    LastName = "Norman", DepartmentID = departments.Single(i => i.Name == "Economics").DepartmentID,
                     EnrollmentDate = DateTime.Parse("2013-09-01") },
-                new Student { FirstMidName = "Nino",     LastName = "Olivetto",
+                new Student { FirstMidName = "Nino",     LastName = "Olivetto", DepartmentID = departments.Single(i => i.Name == "Economics").DepartmentID,
                     EnrollmentDate = DateTime.Parse("2005-09-01") }
 };
 
