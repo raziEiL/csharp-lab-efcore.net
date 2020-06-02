@@ -31,5 +31,13 @@ namespace ContosoUniversity.Models
         public University University { get; set; }
         public ICollection<Course> Courses { get; set; }
         public ICollection<Student> Students { get; set; }
+
+        public string FullName
+        {
+            get
+            {
+                return University.Name + " (" + Name + ")";
+            }
+        }
     }
 }

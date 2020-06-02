@@ -20,25 +20,8 @@ namespace ContosoUniversity.Controllers
         }
 
         // GET: Students
-        public async Task<IActionResult> Index(
-            string sortOrder,
-            string currentFilter,
-            string searchString,
-            int? pageNumber)
+        public async Task<IActionResult> Index(string searchString)
         {
-            ViewData["CurrentSort"] = sortOrder;
-            ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
-            ViewData["DateSortParm"] = sortOrder == "Date" ? "date_desc" : "Date";
-
-            if (searchString != null)
-            {
-                pageNumber = 1;
-            }
-            else
-            {
-                searchString = currentFilter;
-            }
-
             ViewData["CurrentFilter"] = searchString;
 
             var students = from s in _context.Students
@@ -48,30 +31,15 @@ namespace ContosoUniversity.Controllers
                 students = students.Where(s => s.LastName.Contains(searchString)
                                        || s.FirstMidName.Contains(searchString));
             }
-            switch (sortOrder)
-            {
-                case "name_desc":
-                    students = students.OrderByDescending(s => s.LastName);
-                    break;
-                case "Date":
-                    students = students.OrderBy(s => s.EnrollmentDate);
-                    break;
-                case "date_desc":
-                    students = students.OrderByDescending(s => s.EnrollmentDate);
-                    break;
-                default:
-                    students = students.OrderBy(s => s.LastName);
-                    break;
-            }
 
-            int pageSize = 3;
-            return View(await PaginatedList<Student>.CreateAsync(students.AsNoTracking(), pageNumber ?? 1, pageSize));
+            return View(await students.Include(i => i.Department).ThenInclude(i => i.University).ToListAsync());
         }
 
 
         // GET: Students/Create
         public IActionResult Create()
         {
+            PopulateDepartmentsDropDownList();
             return View();
         }
 
@@ -81,7 +49,7 @@ namespace ContosoUniversity.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(
-            [Bind("EnrollmentDate,FirstMidName,LastName")] Student student)
+            [Bind("EnrollmentDate,FirstMidName,LastName,DepartmentID")] Student student)
         {
             try
             {
@@ -99,6 +67,7 @@ namespace ContosoUniversity.Controllers
                     "Try again, and if the problem persists " +
                     "see your system administrator.");
             }
+            PopulateDepartmentsDropDownList(student.DepartmentID);
             return View(student);
         }
 
@@ -115,6 +84,7 @@ namespace ContosoUniversity.Controllers
             {
                 return NotFound();
             }
+            PopulateDepartmentsDropDownList(student.DepartmentID);
             return View(student);
         }
 
@@ -133,7 +103,7 @@ namespace ContosoUniversity.Controllers
             if (await TryUpdateModelAsync<Student>(
                 studentToUpdate,
                 "",
-                s => s.FirstMidName, s => s.LastName, s => s.EnrollmentDate))
+                s => s.FirstMidName, s => s.LastName, s => s.EnrollmentDate, s => s.DepartmentID))
             {
                 try
                 {
@@ -151,6 +121,10 @@ namespace ContosoUniversity.Controllers
             return View(studentToUpdate);
         }
 
+        private void PopulateDepartmentsDropDownList(object selectedDepartment = null)
+        {
+            ViewBag.DepartmentID = new SelectList(_context.Departments.Include(i => i.University).AsNoTracking(), "DepartmentID", "FullName", selectedDepartment);
+        }
         // GET: Students/Delete/5
         public async Task<IActionResult> Delete(int? id, bool? saveChangesError = false)
         {
