@@ -7,24 +7,20 @@
 <h2>Предметы</h2>
 
 <p>
-    <a asp-action="Create">Создать</a>
+    <a asp-action="Create">Добавить</a>
 </p>
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.CourseID)
+               №
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Title)
+               Название
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Credits)
+                Кафедра
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Department)
-            </th>
-            <th></th>
         </tr>
     </thead>
     <tbody>
@@ -38,14 +34,10 @@
                     @Html.DisplayFor(modelItem => item.Title)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Credits)
-                </td>
-                <td>
                     @Html.DisplayFor(modelItem => item.Department.Name)
                 </td>
                 <td>
                     <a asp-action="Edit" asp-route-id="@item.CourseID">Редактировать</a> |
-                    <a asp-action="Details" asp-route-id="@item.CourseID">Подробно</a> |
                     <a asp-action="Delete" asp-route-id="@item.CourseID">Удалить</a>
                 </td>
             </tr>

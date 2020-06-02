@@ -87,8 +87,7 @@ namespace ContosoUniversity.Controllers
                 .FirstOrDefaultAsync(c => c.CourseID == id);
 
             if (await TryUpdateModelAsync<Course>(courseToUpdate,
-                "",
-                c => c.Credits, c => c.DepartmentID, c => c.Title))
+                "", c => c.DepartmentID, c => c.Title))
             {
                 try
                 {
