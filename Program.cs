@@ -23,7 +23,7 @@ namespace ContosoUniversity
                 var services = scope.ServiceProvider;
                 try
                 {
-                    var context = services.GetRequiredService<SchoolContext>();
+                    var context = services.GetRequiredService<UniversityContext>();
                     DbInitializer.Initialize(context);
                 }
                 catch (Exception ex)

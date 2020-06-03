@@ -12,9 +12,9 @@ namespace ContosoUniversity.Controllers
 {
     public class StudentsController : Controller
     {
-        private readonly SchoolContext _context;
+        private readonly UniversityContext _context;
 
-        public StudentsController(SchoolContext context)
+        public StudentsController(UniversityContext context)
         {
             _context = context;
         }

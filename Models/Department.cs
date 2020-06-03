@@ -24,9 +24,6 @@ namespace ContosoUniversity.Models
         public int? InstructorID { get; set; }
         public int? UniversityID { get; set; }
 
-        [Timestamp]
-        public byte[] RowVersion { get; set; }
-
         public Instructor Administrator { get; set; }
         public University University { get; set; }
         public ICollection<Course> Courses { get; set; }

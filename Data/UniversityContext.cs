@@ -3,9 +3,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ContosoUniversity.Data
 {
-    public class SchoolContext : DbContext
+    public class UniversityContext : DbContext
     {
-        public SchoolContext(DbContextOptions<SchoolContext> options) : base(options)
+        public UniversityContext(DbContextOptions<UniversityContext> options) : base(options)
         {
         }
 
@@ -15,7 +15,7 @@ namespace ContosoUniversity.Data
         public DbSet<Instructor> Instructors { get; set; }
         public DbSet<OfficeAssignment> OfficeAssignments { get; set; }
         public DbSet<CourseAssignment> CourseAssignments { get; set; }
-        public DbSet<Person> People { get; set; }
+        public DbSet<Person> Persons { get; set; }
         public DbSet<University> Universities { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

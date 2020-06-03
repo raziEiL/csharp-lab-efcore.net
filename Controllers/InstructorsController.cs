@@ -7,15 +7,15 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ContosoUniversity.Data;
 using ContosoUniversity.Models;
-using ContosoUniversity.Models.SchoolViewModels;
+using ContosoUniversity.Models.ViewModels;
 
 namespace ContosoUniversity.Controllers
 {
     public class InstructorsController : Controller
     {
-        private readonly SchoolContext _context;
+        private readonly UniversityContext _context;
 
-        public InstructorsController(SchoolContext context)
+        public InstructorsController(UniversityContext context)
         {
             _context = context;
         }

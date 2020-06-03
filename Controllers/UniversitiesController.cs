@@ -1,6 +1,6 @@
 ﻿using ContosoUniversity.Data;
 using ContosoUniversity.Models;
-using ContosoUniversity.Models.SchoolViewModels;
+using ContosoUniversity.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
@@ -11,9 +11,9 @@ namespace ContosoUniversity.Controllers
 {
     public class UniversitiesController : Controller
     {
-        private readonly SchoolContext _context;
+        private readonly UniversityContext _context;
 
-        public UniversitiesController(SchoolContext context)
+        public UniversitiesController(UniversityContext context)
         {
             _context = context;
         }

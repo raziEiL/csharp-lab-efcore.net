@@ -7,16 +7,16 @@ using Microsoft.AspNetCore.Mvc;
 using ContosoUniversity.Models;
 using Microsoft.EntityFrameworkCore;
 using ContosoUniversity.Data;
-using ContosoUniversity.Models.SchoolViewModels;
+using ContosoUniversity.Models.ViewModels;
 using System.Data.Common;
 
 namespace ContosoUniversity.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly SchoolContext _context;
+        private readonly UniversityContext _context;
 
-        public HomeController(SchoolContext context)
+        public HomeController(UniversityContext context)
         {
             _context = context;
         }

@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<ContosoUniversity.Models.Department>
 
 @{
-    ViewData["Title"] = "Departments";
+    ViewData["Title"] = "Кафедры";
 }
 
 <h2>Кафедры</h2>
@@ -21,9 +21,6 @@
             <th>
               Дата начала
             </th>
-            @*<th>
-            @Html.DisplayNameFor(model => model.RowVersion)
-        </th>*@
             <th>
                Руководитель
             </th>
@@ -45,9 +42,6 @@
             <td>
                 @Html.DisplayFor(modelItem => item.StartDate)
             </td>
-            @*<td>
-            @Html.DisplayFor(modelItem => item.RowVersion)
-        </td>*@
             <td>
                 @Html.DisplayFor(modelItem => item.Administrator.FullName)
             </td>
